@@ -1,6 +1,7 @@
 const SETTING_ENDPOINT = 'https://api.tocotocotea.com/v1/settings';
 const COLLECTION_ENPOINT= 'https://api.tocotocotea.com/v1/collections/<ID>/products';
 let collections = [];
+let collectionCount = 0;
 const productHash = {};
 
 $.get(SETTING_ENDPOINT, (resp) => {
@@ -8,20 +9,33 @@ $.get(SETTING_ENDPOINT, (resp) => {
     const setting = resp.mobile.south;
     console.log(setting);
     collections = setting.menu_screen.list_collections.filter(c => c.col_id);
+    collectionCount = collections.length;
     renderCollections();
 
+    let count = 0;
     collections.forEach(col => {
-        if (!col.col_id) return;
+        if (!col.col_id) {
+            count++;
+            if (count === collectionCount) {
+                renderCollections();
+            }
+            return;
+        }
         
         const collectionId = col.col_id;
         const url = COLLECTION_ENPOINT.replace('<ID>', collectionId);
         $.get(url, (data) => {
             productHash[collectionId] = data.products;
+            count++;
+            if (count === collectionCount) {
+                renderCollections();
+            }
         })
     })
 })
 
 function renderCollections() {
+    console.log('render collection');
     const collectionsData = collections.map(c => ({
         count: productHash[c.col_id] ? productHash[c.col_id].length : 'N/A',
         id: c.col_id,
