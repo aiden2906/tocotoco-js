@@ -886,16 +886,17 @@
 
  .menu-categories-inner .menu-categories--content .menu-categories--item {
     display: flex;
-    padding: 8px 0;
+    padding: 8px 20px;
+    background-color: goldenrod;
     align-items: center;
     justify-content: space-between;
-    border-bottom: 1px solid var(--tocotoco-color-border-exlight);
+    border-bottom: 1px solid grey;
     font-weight: 500;
-    cursor: pointer
+    cursor: pointer;
+    margin-top: 5px;
 }
 
  .menu-categories-inner .menu-categories--content .menu-categories--item:last-child {
-    padding-bottom: 0;
     border-bottom: none
 }
 
@@ -1417,8 +1418,26 @@
     font-weight: 600
 }
 
+.btn-action div{
+    float: left;
+    text-align: center;
+    width: 20px;
+    border-radius: 50%;
+    background-color: #799dd9;
+    cursor: pointer;
+    margin-right: 5px;
+}
+
 
 app-menu-item-product-grid {
     width: 25%;
     position: relative;
+}
+
+
+.cart-item {
+    background-color: goldenrod;
+    padding: 5px 30px;
+    margin-top: 5px;
+    border-radius: 10px;
 }

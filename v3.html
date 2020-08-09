@@ -1,64 +1,75 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Tocotoco</title>
-    <link rel="stylesheet" href="css/toco.css">
-</head>
+    <link rel="stylesheet" href="css/toco.css" />
+  </head>
 
-<body>
+  <body>
     <script type="x-tpl/template" id="tpl-cate-item">
-        {% for (let c of o) { %}
-        <div data-id="{%= c.id %}" class="menu-categories--item">
-            <div class="item--label">{%= c.title %}</div>
-            <div class="item--count">{%= c.count %}</div>
+      {% for (let c of o) { %}
+      <div data-id="{%= c.id %}" class="menu-categories--item">
+          <div class="item--label">{%= c.title %}</div>
+          <div class="item--count">{%= c.count %}</div>
+      </div>
+      {% } %}
+    </script>
+    <script type="x-tpl/template" id="tpl-cart-item">
+        <div style="height: 250px; overflow-y: scroll;">
+      {% for (let c of o) { %}
+          <div data-id={%= c.item.id %} class="cart-item" >
+                <div class="item--label">Tên sản phẩm : {%= c.item.name %}</div>
+                <div>Giá : {%= c.item.minPrice %} d</div>
+                <div class="item--count">Số lượng : {%= c.quantity %}</div>
+                <span class="btn-action add"><div>+</div></span>
+                <span class="btn-action remove"><div>-</div></span>
+                <div style="clear:both;"></div>
+          </div>
+      {% } %}
         </div>
-        {% } %}
+      <div style="margin-top: 10px">Tổng : {%= o.reduce((cur, i)=> cur+i.item.minPrice * i.quantity, 0) %} d</div>
     </script>
     <script type="x-tpl/template" id="tpl-product-item">
-        <div class="group-title active"><span class="group-title--label">{%= o.collectionTitle %}</span><span
-            class="group-title--right"><span class="count-product">{%= o.count %}</span></span></div>
-        <div class="menu-group-list active" id="products">
-            {% for (let p of o.products) { %}
-            <app-menu-item-product-grid class="item-left menu-item" data-pid="{%= p.id %}">
-                <div class="item-menu-product-inner">
-                    <div class="product-feature-img"><img 
-                            src="{%=p.imageUrl%}">
-                    </div>
-                    <div class="item-mn-product-infor">
-                        <div class="product-title">
-                            <a class="router-link-cus">{%= p.name %}</a>
-                        </div>
-                        <div class="product-price">
-                            <div class="price-current">{%= p.price %}</div>
-                        </div>
-                    </div>
-                    <div class="item-mn-product-action">
-                        <div class="item-mn-product-add">+</div>
-                    </div>
-                </div>
-            </app-menu-item-product-grid>
-        {% } %}
-        </div>
+      <div class="group-title active"><span class="group-title--label">{%= o.collectionTitle %}</span><span
+          class="group-title--right"><span class="count-product">{%= o.count %}</span></span></div>
+      <div class="menu-group-list active" id="products">
+          {% for (let p of o.products) { %}
+          <app-menu-item-product-grid class="item-left menu-item" data-pid="{%= p.id %}">
+              <div class="item-menu-product-inner">
+                  <div class="product-feature-img"><img
+                          src="{%=p.imageUrl%}">
+                  </div>
+                  <div class="item-mn-product-infor">
+                      <div class="product-title">
+                          <a class="router-link-cus">{%= p.name %}</a>
+                      </div>
+                      <div class="product-price">
+                          <div class="price-current">{%= p.price %}</div>
+                      </div>
+                  </div>
+                  <div class="item-mn-product-action">
+                      <div class="item-mn-product-add">+</div>
+                  </div>
+              </div>
+          </app-menu-item-product-grid>
+      {% } %}
+      </div>
     </script>
 
     <div id="app">
-        <div class="menu-categories-inner">
-            <div class="menu-categories--title">Danh mục</div>
-            <div class="menu-categories--content" id="menu">
-            </div>
-        </div>
-
-        <div class="menu-group-inner" id="product-wrapper">
-            
-        </div>
+      <div class="menu-categories-inner">
+        <div class="menu-categories--title">Danh mục</div>
+        <div class="menu-categories--content" id="menu" style="width: 40%; float: left;"></div>
+        <div class="menu-cart-item" id="cart" style="width: 40%; float: right;"></div>
+        <div style="clear: both;"></div>
+      </div>
+      <div class="menu-group-inner" id="product-wrapper"></div>
     </div>
 
     <script src="/js/jquery.min.js"></script>
     <script src="/js/tmpl.min.js"></script>
     <script src="/js/v3.js"></script>
-</body>
-
+  </body>
 </html>
