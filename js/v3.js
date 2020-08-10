@@ -110,9 +110,21 @@ function removeProductInCart() {
   }
 }
 
+function remvoveAll(){
+  console.log('remove all')
+  cart = [];
+  renderCart();
+}
+
 function renderCart() {
   const html = tmpl('tpl-cart-item', cart);
   $('#cart').html(html);
+}
+
+function renderPay(){
+  const html = tmpl('tpl-payment', cart);
+  console.log(cart)
+  $('#payment').html(html);
 }
 
 String.prototype.formatMoney = function () {
@@ -123,3 +135,7 @@ $(document).on('click', '.menu-categories--item', renderProductsByCollection);
 $(document).on('click', '.item-mn-product-action', addProductToCart);
 $(document).on('click', '.btn-action.add', addProductInCart);
 $(document).on('click', '.btn-action.remove', removeProductInCart);
+$(document).on('click', '#remove-all', remvoveAll);
+$(document).on('click', '#pay', renderPay);
+
+$(document).on('click', '.trigger_popup_fricc', renderPay);
